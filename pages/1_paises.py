@@ -221,10 +221,10 @@ with col2:
     #st.dataframe(df.style.format(subset=['Aggregate rating'], formatter='{:.2f}'))
 
  
-    maior_avaliacao = (df.loc[:,['Country name','Aggregate rating']].groupby('Country name').mean().sort_values(['Aggregate rating'], ascending=False)
+    maior_avaliacao = round(df.loc[:,['Country name','Aggregate rating']].groupby('Country name').mean().sort_values(['Aggregate rating'], ascending=False),2)
                                 
    
-    st.dataframe(round(maior_avaliacao),2)
+    st.dataframe(maior_avaliacao)
 
 
 with st.container():
