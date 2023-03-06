@@ -25,7 +25,7 @@ df_raw = pd.read_csv('dataset/zomato_1.csv', encoding='utf-8')
 
 df = df_raw.copy()
 
-st.write(df.style.format({"Predictions": "{:.2f}"}))
+#st.write(df.style.format({"Predictions": "{:.2f}"}))
 
 
 # ===================================================================
