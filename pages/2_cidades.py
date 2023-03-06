@@ -23,6 +23,8 @@ df_raw = pd.read_csv('dataset/zomato_1.csv', encoding='utf-8')
 
 df = df_raw.copy()
 
+st.dataframe(df.style.format(precision=2))
+
 # ===================================================================
 
 #Separando os tipos de culinária em restaurantes que possuem mais de uma:
