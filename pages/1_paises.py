@@ -11,6 +11,8 @@ import folium
 from folium.plugins import MarkerCluster
 
 
+
+
 #df_raw = pd.read_csv('zomato_1.csv', encoding='ISO-8859-1')
 
 #from google.colab import drive
@@ -22,6 +24,9 @@ df_raw = pd.read_csv('dataset/zomato_1.csv', encoding='utf-8')
 
 
 df = df_raw.copy()
+
+st.write(df.style.format({"Predictions": "{:.2f}"}))
+
 
 # ===================================================================
 
