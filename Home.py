@@ -104,7 +104,7 @@ def rename_columns(dataframe):
 st.markdown('A Zomato é um serviço de busca de restaurantes para quem quer sair para jantar, buscar comida ou pedir em casa na Índia, Brasil, Portugal, Turquia, Indonésia, Nova Zelândia, Itália, Filipinas, África do Sul, Sri Lanka, Catar, Emirados Árabes Unidos, Reino Unido, Estados Unidos, Austrália e Canadá.')
 st.markdown('___________________________________________________________________')          
 st.markdown('Essa Dashboard tem o intuito de fazer análises sob o ponto de vista de países, cidades e tipos de culinárias.')
-st.markdown('Essas análises podem ser acessadas no menu do canto superior esquerdo junto de um filtro de países feito para fins comparativos.')
+st.markdown('As análises podem ser acessadas no menu do canto superior esquerdo junto de um filtro de países feito para fins comparativos.')
 st.markdown('___________________________________________________________________')           
 st.markdown('Essas informações foram disponibilizadas pelo site kaggle.com')
 st.markdown('___________________________________________________________________')           
