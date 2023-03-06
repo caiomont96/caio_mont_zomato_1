@@ -217,11 +217,14 @@ with col1:
    
 with col2:
     st.subheader( 'Com maior avaliação média')
+    
+    st.dataframe(df.style.format(subset=['Aggregate rating'], formatter='{:.2f}'))
+
  
     maior_avaliacao = round(df.loc[:,['Country name','Aggregate rating']].groupby('Country name').mean().sort_values(['Aggregate rating'], ascending=False),1)
                                 
    
-    st.dataframe(maior_avaliacao)
+    st.dataframe(round(maior_avaliacao),2)
 
 
 with st.container():
