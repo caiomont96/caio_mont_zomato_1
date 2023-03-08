@@ -173,6 +173,23 @@ with col4:
 
 #------------------------------------------------------------------
 
+with st.container():
+   
+    st.markdown('## 20 Culinárias mais comuns')
+   
+
+
+    df_aux = df.loc[:, ['Cuisines','Country name']].groupby('Cuisines').count().sort_values(['Country name'], ascending=False).head(20)
+
+    df_aux = df_aux.reset_index()
+
+    fig = px.bar(df_aux, x= 'Cuisines', y= 'Country name')
+
+    #fig.show()
+
+    st.plotly_chart( fig, use_container_width=True )
+
+
 
 #------------------------------------------------------------------
 
@@ -181,13 +198,13 @@ with st.container():
 
     st.markdown("""___""")           
 
-    st.subheader( 'Culinárias dos restaurantes que mais fazem entregas')
+    st.subheader( 'Culinárias dos restaurantes que mais fazem entregas online')
 
     df_online1 = df[df['Has Online delivery'].isin([1])]
 
     df_online1_delivery1 = df_online1[df_online1['Is delivering now'].isin([1])]
 
-    df_aux1 = (df_online1_delivery1.loc[: , ['Restaurant Name', 'Cuisines']].groupby('Cuisines').count().sort_values('Restaurant Name', ascending=False)).head()
+    df_aux1 = (df_online1_delivery1.loc[: , ['Restaurant Name', 'Cuisines']].groupby('Cuisines').count().sort_values('Restaurant Name', ascending=False)).head(10)
     
     df_aux1 = df_aux1.reset_index()
     
@@ -195,14 +212,34 @@ with st.container():
     
     st.plotly_chart( fig, use_container_width=True )
 
+#-------------------------------------------------------------------
+
+with st.container():
+
+
+    st.markdown("""___""")           
+
+    st.subheader( 'Culinárias dos restaurantes que mais fazem entregas online')
+
+    df_online1 = df[df['Has Online delivery'].isin([1])]
+
+    df_online1_delivery1 = df_online1[df_online1['Is delivering now'].isin([1])]
+
+    df_aux1 = (df_online1_delivery1.loc[: , ['Restaurant Name', 'Cuisines']].groupby('Cuisines').count().sort_values('Restaurant Name', ascending=False)).head(10)
+    
+    df_aux1 = df_aux1.reset_index()
+    
+    fig = px.bar(df_aux1, x= 'Cuisines' , y= 'Restaurant Name')
+    
+    st.plotly_chart( fig, use_container_width=True )
+    
+#----------------------------------------------
+
     #--------------------------------------------------
-
-    # --------------------------------------------------
-    
-    st.subheader( 'Restaurantes de culinária italiana mais bem avaliados')
+    st.subheader( 'Fast Foods mais bem avaliados e seus respectivos países')
 
     
-    df_c = df[df['Cuisines'] == ('Italian')]
+    df_c = df[df['Cuisines'] == ('Fast Food')]
 
 
     df_aux2 = (df_c.loc[:,['Restaurant Name', 'Country name', 'Aggregate rating']]
@@ -214,10 +251,51 @@ with st.container():
     df_aux2 = df_aux2.reset_index().sort_values(['mean'], ascending=False)
     
     st.dataframe(df_aux2)
+    
+    
+    #------------------------------
+    
+        
+    st.subheader( 'Restaurantes de culinária brasileira mais bem avaliados e seus respectivos países')
+
+    
+    df_c = df[df['Cuisines'] == ('Brazilian')]
+
+
+    df_aux2 = (df_c.loc[:,['Restaurant Name', 'Country name', 'Aggregate rating']]
+          .groupby( ['Country name','Restaurant Name'])
+          .agg({'Aggregate rating':['mean']}))
+
+    df_aux2.columns = ['mean']
+
+    df_aux2 = df_aux2.reset_index().sort_values(['mean'], ascending=False)
+    
+    st.dataframe(df_aux2)
+    
+    #-----------------------------------------------------------------
+    
+    
+
+    # --------------------------------------------------
+    
+    st.subheader( 'Restaurantes de culinária italiana mais bem avaliados e seus respectivos países')
+
+    
+    df_c = df[df['Cuisines'] == ('Italian')]
+
+
+    df_aux2 = (df_c.loc[:,['Restaurant Name', 'Country name', 'Aggregate rating']]
+          .groupby( ['Country name','Restaurant Name'])
+          .agg({'Aggregate rating':['mean']}))
+    df_aux2.columns = ['mean']
+
+    df_aux2 = df_aux2.reset_index().sort_values(['mean'], ascending=False)
+    
+    st.dataframe(df_aux2)
         
     #---------------------------------------------------------------
     
-    st.subheader( 'Restaurantes de culinária japonesa mais bem avaliados')
+    st.subheader( 'Restaurantes de culinária japonesa mais bem avaliados e seus respectivos países')
 
 
     
@@ -235,20 +313,6 @@ with st.container():
     st.dataframe(df_aux2)
     
     #-----------------------------------------------------------------------
-        
-    st.subheader( 'Restaurantes de culinária brasileira mais bem avaliados')
-
     
-    df_c = df[df['Cuisines'] == ('Brazilian')]
 
-
-    df_aux2 = (df_c.loc[:,['Restaurant Name', 'Country name', 'Aggregate rating']]
-          .groupby( ['Country name','Restaurant Name'])
-          .agg({'Aggregate rating':['mean']}))
-
-    df_aux2.columns = ['mean']
-
-    df_aux2 = df_aux2.reset_index().sort_values(['mean'], ascending=False)
-    
-    st.dataframe(df_aux2)
     
