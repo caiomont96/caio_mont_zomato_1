@@ -101,10 +101,10 @@ st.sidebar.markdown( '## Filtros ' )
 
 st.sidebar.markdown( """___""" )
 
-st.sidebar.markdown( '## Selecione um país')
+st.sidebar.markdown( '## Selecione países por exclusão')
 
 country_options = st.sidebar.multiselect(
-    'Qual país?',
+    'Quais países?',
     ['India','Australia','Brazil','Canada','Indonesia',"New Zeland","Philippines","Qatar","Singapure","South Africa","Sri Lanka","Turkey","United Arab Emirates","England","United States of America"],
     default= ['India','Australia','Brazil','Canada','Indonesia',"New Zeland","Philippines","Qatar","Singapure","South Africa","Sri Lanka","Turkey","United Arab Emirates","England","United States of America"] )
 
