@@ -101,7 +101,7 @@ st.sidebar.markdown( '## Filtros ' )
 
 st.sidebar.markdown( """___""" )
 
-st.sidebar.markdown( '## Selecione países por exclusão')
+st.sidebar.markdown( '## Seleção de países por exclusão')
 
 country_options = st.sidebar.multiselect(
     'Quais países?',
