@@ -17,13 +17,9 @@ from folium.plugins import MarkerCluster
 
 #drive.mount('/content/drive')
 
-#df_raw = pd.read_csv('dataset/zomato_1.csv', encoding="ISO-8859-1")
-df_raw = pd.read_csv('dataset/zomato_1.csv', encoding='utf-8')
-
+df_raw = pd.read_csv('zomato_1.csv', encoding="utf-8")
 
 df = df_raw.copy()
-
-st.dataframe(df.style.format(precision=2))
 
 # ===================================================================
 
@@ -101,14 +97,14 @@ st.sidebar.image( image, width=120 )
 
 
 st.sidebar.title( '' )
-st.sidebar.markdown( '## Filtro ' )
+st.sidebar.markdown( '## Filtros ' )
 
 st.sidebar.markdown( """___""" )
 
-st.sidebar.markdown( '## Seleção de países por exclusão')
+st.sidebar.markdown( '## Selecione um país')
 
 country_options = st.sidebar.multiselect(
-    'Quais países?',
+    'Qual país?',
     ['India','Australia','Brazil','Canada','Indonesia',"New Zeland","Philippines","Qatar","Singapure","South Africa","Sri Lanka","Turkey","United Arab Emirates","England","United States of America"],
     default= ['India','Australia','Brazil','Canada','Indonesia',"New Zeland","Philippines","Qatar","Singapure","South Africa","Sri Lanka","Turkey","United Arab Emirates","England","United States of America"] )
 
@@ -120,25 +116,68 @@ df = df.loc[linhas_selecionadas, :]
 
 #---------------------------------------------------------------
 
+col1, col2, col3, col4 = st.columns( 4 )
+with col1:
+   # st.subheader( 'Quantidade total de culinárias')
+
+    df_aux1 = df.loc[:,'City'].nunique()
+                                
+    col1.metric('Cidades no total',df_aux1)
+
+with col2:
+    
+    df_cn = (df.loc[:,['City','Aggregate rating']].groupby('City').mean().sort_values('Aggregate rating', ascending=False))
+    
+    df_aux = df_cn[df_cn['Aggregate rating'].between(4.00, 10.00)].count()
+    
+    
+    col2.metric('Avaliações acima de 4.0',df_aux)
+    
+    
+with col3:
+    f_cn = (df.loc[:,['City','Aggregate rating']].groupby('City').mean().sort_values('Aggregate rating', ascending=False))
+    
+    df_aux = df_cn[df_cn['Aggregate rating'].between(3.00, 3.99)].count()
+    
+    
+    col3.metric('Entre 3.0 e 4.0',df_aux)
+    
+with col4:
+    
+    f_cn = (df.loc[:,['City','Aggregate rating']].groupby('City').mean().sort_values('Aggregate rating', ascending=False))
+    
+    df_aux = df_cn[df_cn['Aggregate rating'].between(0.00, 2.99)].count()
+    
+    
+    col4.metric('Abaixo de 3.0',df_aux)
+    
+#-----------------------------------------------------------------------------------
+
 with st.container():
     st.markdown("""___""")
+    st.title( 'Ranking de cidades' )
 
 col1, col2 = st.columns( 2 )
 with col1:
-    st.subheader( 'Cidades com mais restaurantes cadastrados')
+    st.subheader( 'Cidade com mais restaurantes cadastrados')
  
     mais_registro = (df.loc[:,['City','Restaurant ID',]].groupby('City').count().sort_values(['Restaurant ID'], ascending=False))
-                                
+                               
     st.dataframe(mais_registro)
 
 with col2:
-    st.subheader( 'Cidades com maior avaliação média')
+    st.subheader( '20 Cidades com maior avaliação média')
  
-    maior_avaliacao = round(df.loc[:,['City','Aggregate rating']].groupby('City').mean().sort_values(['Aggregate rating'], ascending=False),2)
-                                
-   
-    st.dataframe(maior_avaliacao)
+    maior_avaliacao = round(df.loc[:,['City','Aggregate rating']].groupby('City').mean().sort_values(['Aggregate rating'], ascending=False),2).head(20)
     
+    maior_avaliacao = maior_avaliacao.reset_index()
+    
+    fig = px.bar(maior_avaliacao, x= 'Aggregate rating', y= 'City', orientation='h')
+                               
+   
+    st.plotly_chart( fig, use_container_width=True )
+                                  
+   
 # --------------------------------------------------------------
 
 with st.container():
@@ -159,4 +198,49 @@ df_4 = round(df_aux.reset_index(),2)
 st.dataframe(df_4)
 
 #------------------------------------------
+
+
+ #st.subheader( 'Cidade com mais restaurantes cadastrados')
+ 
+#    mais_registro = (df.loc[:,['City','Restaurant #ID',]].groupby('City').count().sort_values(['Restaurant ID'], ascending=False))
+                               
+   
+ #   st.dataframe(mais_registro)
+    
+with st.container():
+   
+    st.markdown('## Cidades que possuem os restaurantes que mais aceitam reserva')
+   
+    df_tbooking = df[df['Has Table booking'].isin([1])]
+       
+    reserva = df_tbooking.loc[:,['City','Has Table booking']].groupby('City').count().sort_values(['Has Table booking'], ascending=False).head(20)
+
+
+    reserva = reserva.reset_index()
+
+    fig = px.bar(reserva, x= 'City', y= 'Has Table booking')
+
+    #fig.show()
+   
+    st.plotly_chart( fig, use_container_width=True )
+    
+#---------------------------------------------------------------------------------
+
+with st.container():
+   
+    st.markdown('## Cidades que possuem os restaurantes que mais realizam pedidos de forma online e seus respectivos países')
+
+    
+    df_c = df[df['Has Online delivery'].isin([1])]
+
+
+    df_aux2 = (df_c.loc[:,['City', 'Country name', 'Has Online delivery']]
+          .groupby( ['Country name','City'])
+          .agg({'Has Online delivery':['count']}))
+
+    df_aux2.columns = ['count']
+
+    df_aux2 = df_aux2.reset_index().sort_values(['count'], ascending=False)
+    
+    st.dataframe(df_aux2)
 
