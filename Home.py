@@ -100,7 +100,7 @@ def rename_columns(dataframe):
 #-------------------------------------------------------------------------------------
 
 
-st.markdown('Zomato é um aplicativo presente em todos os continentes do mundo que dá acesso a restaurantes para quem quer sair para jantar, buscar comida ou pedir em casa.')
+st.markdown('A Zomato é um aplicativo presente em todos os continentes do mundo que dá acesso a restaurantes para quem quer sair para jantar, buscar comida ou pedir em casa.')
 st.markdown('___________________________________________________________________')          
 st.markdown('Essa Dashboard tem o intuito de fazer análises sob o ponto de vista de países, cidades e tipos de culinárias.')
 st.markdown('As análises podem ser acessadas no menu do canto superior esquerdo junto de um filtro de países feito para fins comparativos.')
