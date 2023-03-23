@@ -213,29 +213,7 @@ with st.container():
     st.plotly_chart( fig, use_container_width=True )
 
 #-------------------------------------------------------------------
-
-with st.container():
-
-
-    st.markdown("""___""")           
-
-    st.subheader( 'Culinárias dos restaurantes que mais fazem entregas online')
-
-    df_online1 = df[df['Has Online delivery'].isin([1])]
-
-    df_online1_delivery1 = df_online1[df_online1['Is delivering now'].isin([1])]
-
-    df_aux1 = (df_online1_delivery1.loc[: , ['Restaurant Name', 'Cuisines']].groupby('Cuisines').count().sort_values('Restaurant Name', ascending=False)).head(10)
     
-    df_aux1 = df_aux1.reset_index()
-    
-    fig = px.bar(df_aux1, x= 'Cuisines' , y= 'Restaurant Name')
-    
-    st.plotly_chart( fig, use_container_width=True )
-    
-#----------------------------------------------
-
-    #--------------------------------------------------
     st.subheader( 'Fast Foods mais bem avaliados e seus respectivos países')
 
     
