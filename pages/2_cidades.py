@@ -195,7 +195,7 @@ df_aux.sort_values(['media'],ascending=True)
 
 df_4 = round(df_aux.reset_index(),2)
 
-st.write(df_4.style.format({ 'media': ‘{:.2f}’})
+st.write(df_4.style.format({ 'media': '{:.2f}'})
 
 st.dataframe(df_4)
 
