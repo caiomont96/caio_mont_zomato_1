@@ -189,11 +189,13 @@ with st.container():
 cols = ['Country name','City','Aggregate rating']
 df_aux = df.loc[:, cols].groupby( ['Country name','City']).agg({'Aggregate rating':['mean','std']})
 
-df_aux.columns = ['média','desviop']
+df_aux.columns = ['media','desviop']
 
-df_aux.sort_values(['média'],ascending=True)
+df_aux.sort_values(['media'],ascending=True)
 
 df_4 = round(df_aux.reset_index(),2)
+
+st.write(df_4.style.format({ 'media': ‘{:.2f}’})
 
 st.dataframe(df_4)
 
